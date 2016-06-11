@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<f:view>
+	<h:head>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>TaxCalculator</title>
+	</h:head>
+	<h:body>
+		<h1>消費税の計算</h1>
+					
+		<!-- エラーメッセージの表示 -->
+		<p><h:message for="noribenInput" id="noribenError" style="color: red" /></p>
+		<p><h:message for="syakebenInput" id="syakebenError" style="color: red" /></p>
+		<p><h:message for="makunouchiInput" id="makunouchiError" style="color: red" /></p>
+		
+		<h:form>
+			<div class="tax">
+				<table>
+					<thead>
+						<tr>
+							<th id="name">品名</th>
+							<th id="price">単価</th>
+							<th id="count">個数</th>
+							<th id="subtotal">小計</th>
+						</tr>
+					</thead>
+					
+					<!-- のり弁の表示 -->
+					<tr>
+						<td>のり弁</td>
+						
+						<!-- 値段の表示 -->
+						<td><h:outputText value="#{multiplier.noribenPrice}" /></td>
+						
+						<!-- 個数入力ボックスの表示 -->
+						<td>
+							<h:inputText id="noribenInput" class="taxInput" value="#{multiplier.noribenCount}"
+								validatorMessage="のり弁の個数に入力誤りがあります。0から2147483647の整数を入力してください。">
+								<f:ajax execute="noribenInput" render="noribenError" event="blur" />
+								<f:validateLongRange minimum="0" maximum="2147483647" />
+							</h:inputText>
+						</td>
+						
+						<!-- 小計を ###,### の形式で表示 -->
+						<td>
+							<h:outputText id="noribenSubtotal" value="#{multiplier.noribenSubtotal}">
+								<f:convertNumber pattern="###,##0" />
+							</h:outputText>
+						</td>
+					</tr>
+					
+					<!-- しゃけ弁の表示 -->
+					<tr>
+						<td>しゃけ弁</td>
+						
+						<!-- 値段の表示 -->
+						<td><h:outputText value="#{multiplier.syakebenPrice}" /></td>
+						
+						<!-- 個数入力ボックスの表示 -->
+						<td>
+							<h:inputText id="syakebenInput" class="taxInput" value="#{multiplier.syakebenCount}"
+								validatorMessage="しゃけ弁の個数に入力誤りがあります。0から2147483647の整数を入力してください。">
+								<f:ajax execute="syakebenInput" render="syakebenError" event="blur" />
+								<f:validateLongRange minimum="0" maximum="2147483647" />
+							</h:inputText>
+						</td>
+						
+						<!-- 小計を ###,### の形式で表示 -->
+						<td>
+							<h:outputText id="syakebenSubtotal"	value="#{multiplier.syakebenSubtotal}">
+								<f:convertNumber pattern="###,##0" />
+							</h:outputText>
+						</td>
+					</tr>
+					
+					<!-- 幕の内の表示 -->
+					<tr>
+						<td>幕の内</td>
+						
+						<!-- 値段の表示 -->
+						<td><h:outputText value="#{multiplier.makunouchiPrice}" /></td>
+						
+						<!-- 個数入力ボックスの表示 -->
+						<td>
+							<h:inputText id="makunouchiInput" class="taxInput" value="#{multiplier.makunouchiCount}"
+								validatorMessage="幕の内の個数に入力誤りがあります。0から2147483647の整数を入力してください。">
+								<f:ajax execute="makunouchiInput" render="makunouchiError" event="blur" />
+								<f:validateLongRange minimum="0" maximum="2147483647" />
+							</h:inputText>
+						</td>
+						
+						<!-- 小計を ###,### の形式で表示 -->
+						<td>
+							<h:outputText id="makunouchiSubtotal" value="#{multiplier.makunouchiSubtotal}">
+								<f:convertNumber pattern="###,##0" />
+							</h:outputText>
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<h2>消費税の計算</h2>
+			<f:ajax execute="noribenInput syakebenInput makunouchiInput"
+				render="noribenSubtotal syakebenSubtotal makunouchiSubtotal ">
+				<h:commandButton class="tax_button" value="5%" action="#{multiplier.setTax05}" />
+				<h:commandButton class="tax_button" value="8%" action="#{multiplier.setTax08}" />
+				<h:commandButton class="tax_button" value="10%" action="#{multiplier.setTax10}" />
+			</f:ajax>
+		</h:form>
+	</h:body>
+</f:view>
+</html>
