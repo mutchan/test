@@ -1,0 +1,52 @@
+@CHARSET "UTF-8";
+
+.tax table {
+	text-align: center;
+	border: 2px solid;
+	border-collapse: collapse;
+	width: 75%;
+}
+
+.tax td, th {
+	text-align: center;
+	border: 2px solid;
+	height: 50px;
+}
+
+th#name{
+	width: 20%;
+}
+
+th#price{
+	width: 20%;
+}
+
+th#count{
+	width: 30%;
+}
+
+th#subtotal{
+	width: 30%;
+}
+
+.tax thead {
+	background-color: #ff4646;
+	border-bottom: 4px solid #FFF;
+	color: #FFF;
+	height: 50px;
+}
+
+.tax tbody {
+	background-color: #ffa8a8;
+	color: #FFF;
+}
+
+input.taxInput {
+	width: 95%;
+	text-align: center;
+}
+
+input.taxButton {
+	width: 25%;
+	height: 4em;
+}

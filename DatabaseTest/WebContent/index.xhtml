@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<f:view>
+	<h:head>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>在庫管理</title>
+	</h:head>
+	<h:body>
+		<h1>在庫の確認</h1>
+
+		<h:form>
+			<div class="tax">
+				<h:dataTable value="#{tableData.rowData}" var="row" border="1"
+					cellpadding="0" cellspacing="0" rowClasses="data"
+					columnClasses="center,center" captionClass="caption"
+					headerClass="header">
+
+					<f:facet name="caption">
+						<h:outputText value="在庫一覧" />
+					</f:facet>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="品名" />
+						</f:facet>
+						<h:outputText value="#{row.name}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="単価" />
+						</f:facet>
+						<h:outputText value="#{row.price}">
+							<f:convertNumber pattern="###,##0" />
+						</h:outputText>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="在庫数" />
+						</f:facet>
+						<h:outputText value="#{row.stock}">
+							<f:convertNumber pattern="###,##0" />
+						</h:outputText>
+					</h:column>
+				</h:dataTable>
+			</div>
+
+			<h2>新規追加</h2>
+			<div class="tax">
+				<table border="1" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<th class="header" scope="col">品名</th>
+							<th class="header" scope="col">単価</th>
+							<th class="header" scope="col">在庫数</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><h:inputText value="#{tableData.name}" /></td>
+							<td><h:inputText value="#{tableData.price}"
+									converter="javax.faces.Integer" /></td>
+							<td><h:inputText value="#{tableData.stock}"
+									converter="javax.faces.Integer" /></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<h:commandButton class="taxButton" value="新規追加"
+				action="#{tableData.add}" />
+		</h:form>
+	</h:body>
+</f:view>
+</html>

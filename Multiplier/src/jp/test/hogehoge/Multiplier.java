@@ -7,7 +7,8 @@ import javax.inject.Named;
 
 /**
  * 消費税を考慮した値段計算を行うクラス
- * @author 
+ * 
+ * @author
  *
  */
 @SuppressWarnings("serial")
@@ -42,10 +43,9 @@ public class Multiplier implements Serializable {
 
 	// 消費税の情報
 	private double tax;
-	private static final double TAX_05 = 0.05;
-	private static final double TAX_08 = 0.08;
-	private static final double TAX_10 = 0.10;
-	
+	private static final double TAX_05 = 1.05;
+	private static final double TAX_08 = 1.08;
+	private static final double TAX_10 = 1.10;
 
 	/**
 	 * のり弁の個数の取得
@@ -63,7 +63,7 @@ public class Multiplier implements Serializable {
 	 *            のり弁の個数
 	 */
 	public void setNoribenCount(int count) {
-		if( count < 0 || count > getNoribenLimitCount()){
+		if (count < 0 || count > getNoribenLimitCount()) {
 			throw new IllegalArgumentException();
 		}
 		this.noriben.count = count;
@@ -85,7 +85,7 @@ public class Multiplier implements Serializable {
 	 *            しゃけ弁の個数
 	 */
 	public void setSyakebenCount(int count) {
-		if( count < 0 || count > getSyakebenLimitCount()){
+		if (count < 0 || count > getSyakebenLimitCount()) {
 			throw new IllegalArgumentException();
 		}
 		this.syakeben.count = count;
@@ -107,7 +107,7 @@ public class Multiplier implements Serializable {
 	 *            幕の内弁の個数
 	 */
 	public void setMakunouchiCount(int count) {
-		if( count < 0 || count > getMakunouchiLimitCount()){
+		if (count < 0 || count > getMakunouchiLimitCount()) {
 			throw new IllegalArgumentException();
 		}
 		this.makunouchi.count = count;
@@ -146,7 +146,7 @@ public class Multiplier implements Serializable {
 	 * @return のり弁の小計
 	 */
 	public int getNoribenSubtotal() {
-		return (int) (this.noriben.subtotal() * (1 + tax));
+		return (int) (this.noriben.subtotal() * tax);
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class Multiplier implements Serializable {
 	 * @return しゃけ弁の小計
 	 */
 	public int getSyakebenSubtotal() {
-		return (int) (this.syakeben.subtotal() * (1 + tax));
+		return (int) (this.syakeben.subtotal() * tax);
 	}
 
 	/**
@@ -164,27 +164,27 @@ public class Multiplier implements Serializable {
 	 * @return 幕の内弁の小計
 	 */
 	public int getMakunouchiSubtotal() {
-		return (int) (this.makunouchi.subtotal() * (1 + tax));
+		return (int) (this.makunouchi.subtotal() * tax);
 	}
-	
+
 	/**
 	 * のり弁の個数の入力値の最大値を計算
 	 */
-	public int getNoribenLimitCount(){
+	public int getNoribenLimitCount() {
 		return (int) (Integer.MAX_VALUE / TAX_10 / this.noriben.price);
 	}
-	
+
 	/**
 	 * しゃけ弁の個数の入力値の最大値を計算
 	 */
-	public int getSyakebenLimitCount(){
+	public int getSyakebenLimitCount() {
 		return (int) (Integer.MAX_VALUE / TAX_10 / this.syakeben.price);
 	}
-	
+
 	/**
 	 * 幕の内の個数の入力値の最大値を計算
 	 */
-	public int getMakunouchiLimitCount(){
+	public int getMakunouchiLimitCount() {
 		return (int) (Integer.MAX_VALUE / TAX_10 / this.makunouchi.price);
 	}
 
