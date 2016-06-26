@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+
+.login {
+	text-align: center;
+}
+
+.login span {
+	display: inline-block;
+	width: 100px;
+}
+
+.login input.input {
+	margin-bottom: 1em;
+	width: 250px;
+}
+
+div.sale {
+	text-align: center;
+}
+
+table {
+	border : 1px solid;
+	width: 100%;
+}
+
+td, th {
+	height: 50px;
+}
+
+thead {
+	height: 50px;
+}
+
+h3.stock_message{
+	text-align: left;
+}
+
+input.add{
+	width: 90%;
+}
+
+button.addButton{
+	float: right;
+}

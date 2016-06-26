@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+	<div id="pageHeader">
+		<a href="login.xhtml"><img height="30px" src="./img/logo.png" /></a>
+		&nbsp;&nbsp;
+		<h:selectOneListbox id="searchFacade" value="すべて" />
+		<h:inputText id="searchBox" />
+		<h:commandButton id="searchButton" value="検索" />
+		<span class="right"> 
+			<a href="index.xhtml" >アカウント</a>
+			<a href="index.xhtml" >カート</a>
+			<a href="index.xhtml" >ログアウト</a>
+		</span>
+	</div>
+</ui:composition>

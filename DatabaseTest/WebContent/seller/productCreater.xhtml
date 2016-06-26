@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link rel="stylesheet" type="text/css" href="new_product.css" />
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+	<script src="preview.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>numazon</title>
+</h:head>
+<h:body>
+	<f:view>
+		<h:form enctype="multipart/form-data">
+			<span class="regist"> <h:selectOneMenu
+					value="#{productCreater.openInfo}">
+					<f:selectItems value="#{productCreater.openInfoList}"
+						var="openInfo" itemValue="#{openInfo}" />
+				</h:selectOneMenu> <h:commandButton value="登録" action="#{productCreater.regist}" />
+			</span>
+			<br />
+			<br />
+			<div class="new_product">
+
+				<table>
+					<tr>
+						<td><img id="preview_img" src="../img/logo.png" class="product" /><br /> <h:inputFile
+								id="file" value="#{productCreater.file}"
+								onchange="preview(this)" /></td>
+						<td><h:inputText value="#{productCreater.name}" /> <br /> <br />
+
+							<f:ajax execute="category" render="count">
+								<h:selectOneMenu id="category" value="#{productCreater.category}">
+									<f:selectItems value="#{productCreater.categoryList}"
+										var="category" itemValue="#{category}" />
+								</h:selectOneMenu>
+							</f:ajax></td>
+
+						<td><h:outputText value="数量" /> <br /> <p:spinner
+								id="count" value="#{productCreater.count}" size="1"
+								disabled="true" /></td>
+
+						<td><h:commandButton styleClass="cart_button" value="カートに追加"
+								disabled="true" /></td>
+					</tr>
+				</table>
+				<h3>商品説明</h3>
+				<h:inputText value="#{productCreater.desc}"
+					style="width:100%; height:10em;" />
+
+			</div>
+
+
+		</h:form>
+	</f:view>
+</h:body>
+<script>
+	oncomplete = "alert('sometext');"
+</script>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form>
+		<div class="sale">
+			<p:growl id="msgs" showDetail="true" />
+			<p:calendar id="from" locale="de" navigator="true"
+				pattern="yyyy/MM/dd" />
+			～
+			<p:calendar id="end" locale="de" navigator="true"
+				pattern="yyyy/MM/dd" />
+
+			<h:commandButton value="更新" style="width: 80px; "></h:commandButton>
+			<p:dataTable border="1" value="#{stockManager.stockList}" var="row"
+				scrollable="true" scrollHeight="400" selectionMode="single"
+				selection="#{stockManager.selectedStock}" rowKey="#{row.id}">
+				<p:ajax event="rowSelect" oncomplete="alert('aaa')" />
+				<p:ajax event="rowUnselect" oncomplete="alert('rowUnselect')" />
+				<p:column id="alert" headerText="アラート">
+					<h:outputText value="アラート" />
+				</p:column>
+				<p:column id="name" headerText="商品名">
+					<h:outputText value="商品名" />
+				</p:column>
+				<p:column id="sale_count" headerText="売上個数">
+					<h:outputText value="売上個数" />
+				</p:column>
+				<p:column id="subtotal" headerText="小計">
+					<h:outputText value="小計" />
+				</p:column>
+				<p:column id="tax" headerText="税">
+					<h:outputText value="税" />
+				</p:column>
+			</p:dataTable>
+			<br />
+			<h:outputLabel value="売上" />
+			&nbsp;&nbsp;&nbsp;
+			<h:outputLabel value="合計" />
+			<h:outputLabel value="1,080" />
+			<h:outputLabel value="円" />
+			&nbsp;&nbsp;
+			<h:outputLabel value="税" />
+			<h:outputLabel value="80" />
+			<h:outputLabel value="円" />
+		</div>
+	</h:form>
+</ui:composition>

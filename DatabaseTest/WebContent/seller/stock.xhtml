@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form>
+		<div class="sale">
+			<p:dataTable border="1" value="#{stockManager.stockList}" var="row"
+				scrollable="true" scrollHeight="400" selectionMode="single"
+				selection="#{stockManager.selectedStock}" rowKey="#{row.id}">
+				<p:ajax event="rowSelect" oncomplete="alert('aaa')" />
+				<p:ajax event="rowUnselect" oncomplete="alert('rowUnselect')" />
+				<p:column headerText="アラート">
+					<h:outputText value="アラート" />
+				</p:column>
+				<p:column headerText="編集日" sortBy="#{row.lastEdit}">
+					<h:outputText value="#{row.lastEdit}">
+						<f:convertDateTime pattern="yyyy/MM/dd" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="商品名" sortBy="#{row.name}">
+					<h:outputText value=" #{row.name}" />
+				</p:column>
+				<p:column headerText="単価" sortBy="#{row.price}">
+					<h:outputText value="#{row.price}" />
+				</p:column>
+				<p:column headerText="在庫" sortBy="#{row.count}">
+					<h:outputText value="#{row.count}" />
+				</p:column>
+				<p:column headerText="公開状況" sortBy="#{row.openString}">
+					<h:outputText value="#{row.openString}" />
+				</p:column>
+				<p:column headerText="追加数">
+					<p:inputText styleClass="add" value="" />
+				</p:column>
+			</p:dataTable>
+			<p:commandButton styleClass="addButton" value="追加" />
+			<h3 class="stock_message">メッセージ</h3>
+			<table style="stock_message">
+				<tr>
+					<td><h:outputLabel value="合計" /></td>
+				</tr>
+			</table>
+		</div>
+	</h:form>
+</ui:composition>
