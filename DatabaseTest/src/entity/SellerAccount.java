@@ -1,4 +1,4 @@
-package login;
+package entity;
 
 import java.io.Serializable;
 import java.lang.String;
@@ -9,8 +9,8 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Table(name = "ACCOUNT")
-public class Account implements Serializable {
+@Table(name = "SELLER_ACCOUNT")
+public class SellerAccount implements Serializable {
 
 	/**
 	 * 
@@ -20,7 +20,7 @@ public class Account implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private int number;
-    @Column(length = 20)
+    @Column(length = 30)
 	private String id;
     @Column(length = 20)
 	private String password;

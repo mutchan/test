@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
+import entity.SellerAccount;
+
 /**
  * @author Mu
  *
@@ -69,9 +71,9 @@ public class Login {
 	 */
 	public String CheckAccount() {
 
-		List<Account> account = em.createQuery("select l from Account l", Account.class).getResultList();
+		List<SellerAccount> account = em.createQuery("select l from Account l", SellerAccount.class).getResultList();
 
-		for (Account acc : account) {
+		for (SellerAccount acc : account) {
 			if( id.equals(acc.getId()) && pass.equals(acc.getPassword())){
 				System.out.println("OK");
 				return "seller/sale?faces-redirect=true";
