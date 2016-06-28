@@ -10,8 +10,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "SELLER_ACCOUNT")
+@NamedQuery(name = SellerAccount.BY_ID, query = "select sa from SellerAccount sa where sa.id = :id")
 public class SellerAccount implements Serializable {
 
+	public static final String BY_ID = "SellerAccount.byId";
+	
 	/**
 	 * 
 	 */

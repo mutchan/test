@@ -13,9 +13,17 @@ import seller.OpenInfo;
  *
  */
 @Entity
-
+@NamedQueries({
+    @NamedQuery(name = Item.FIND_ALL, query = "SELECT i FROM Item i"),
+    @NamedQuery(name = Item.BY_ID, query = "SELECT i FROM Item i WHERE i.id = :id"),
+    @NamedQuery(name = Item.BY_CATEGORY, query = "SELECT i FROM Item i WHERE i.category = :category"),
+    @NamedQuery(name = Item.BY_NAME, query = "SELECT i FROM Item i WHERE i.name LIKE :name")})
 public class Item implements Serializable {
 
+	public static final String FIND_ALL = "Item.findAll";
+	public static final String BY_ID = "Item.findById";
+	public static final String BY_CATEGORY = "Item.findByCategoryId";
+	public static final String BY_NAME = "Item.findByName";
 	   
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)

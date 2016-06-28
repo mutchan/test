@@ -10,27 +10,32 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "USER_ACCOUNT")
-
+@NamedQuery(name = UserAccount.BY_GLOCOMM_ID, query="select a from UserAccount a where a.glocommId = :glocommId")
 public class UserAccount implements Serializable {
+	public static final String BY_GLOCOMM_ID = "UserAccount.byGlocommId";
 
 	@Id
 	@Column(name = "GLOCOMM_ID", length = 30)
-	private int glocommId;
+	private String glocommId;
 	private String name;
 	@Column(name = "ROOM_NUMBER")
 	private int roomNumber;
 	private int point;
 	private int money;
+	@OneToOne(cascade=CascadeType.ALL, mappedBy = "userAccount", fetch = FetchType.LAZY)
+	@JoinColumn(name = "GLOCOMM_ID", referencedColumnName = "ID")
+	GlocommAccount glocommAccount;
+	
 	private static final long serialVersionUID = 1L;
 
 	public UserAccount() {
 		super();
 	}   
-	public int getGlocommId() {
+	public String getGlocommId() {
 		return this.glocommId;
 	}
 
-	public void setGlocommId(int glocommId) {
+	public void setGlocommId(String glocommId) {
 		this.glocommId = glocommId;
 	}   
 	public String getName() {
@@ -62,4 +67,11 @@ public class UserAccount implements Serializable {
 		this.money = money;
 	}
    
+	public void setGlocommAccount(GlocommAccount glocommAccount){
+		this.glocommAccount = glocommAccount;
+	}
+	
+	public GlocommAccount getGlocommAccount() {
+		return this.glocommAccount;
+	}
 }

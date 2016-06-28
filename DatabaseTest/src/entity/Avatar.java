@@ -16,7 +16,8 @@ public class Avatar implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private int imageId;
+	@Column(name="IMAGE_PATH")
+	private String imagePath;
 	private int point;
 	private String name;
 	private static final long serialVersionUID = 1L;
@@ -31,12 +32,12 @@ public class Avatar implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}   
-	public int getImageId() {
-		return this.imageId;
+	public String getImagePath() {
+		return this.imagePath;
 	}
 
-	public void setImageId(int imageId) {
-		this.imageId = imageId;
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}   
 	public int getPoint() {
 		return this.point;

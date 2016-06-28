@@ -9,6 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
+import entity.ExchangeHistory;
+import entity.Item;
+import entity.PreservedAvatar;
 import entity.SellerAccount;
 
 /**
@@ -70,17 +73,28 @@ public class Login {
 	 * @return 成功時はトップページへのリンク
 	 */
 	public String CheckAccount() {
+		ItemManager im = new ItemManager(em);
+		for (Item item : im.getItemListContains(id)){
+			System.out.println(item.getName());
+		}
 
-		List<SellerAccount> account = em.createQuery("select l from Account l", SellerAccount.class).getResultList();
+		AccountManager am = new AccountManager(em);
+		
+		for (PreservedAvatar avatar : am.getPreservedAvatar(id)) {
+			System.out.println(avatar.getAccountId() + "|" + avatar.getDate() + "|" + avatar.getAvatar().getName() + "|"
+					+ avatar.getAvatar().getPoint());
+		}
 
-		for (SellerAccount acc : account) {
-			if( id.equals(acc.getId()) && pass.equals(acc.getPassword())){
-				System.out.println("OK");
-				return "seller/sale?faces-redirect=true";
-			}
+		if (am.checkUser(id, pass)) {
+			return "seller/seller?faces-redirect=true";
+		}
+
+		if (am.checkSeller(id, pass)) {
+			return "seller/seller?faces-redirect=true";
 		}
 
 		System.out.println("NG");
 		return null;
+
 	}
 }
