@@ -7,16 +7,19 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.Part;
 import javax.transaction.UserTransaction;
 
+import entity.SellerAccount;
+
 /**
  * @author Mu
  *
  */
-@ManagedBean(name="stockManager")
+@ManagedBean(name = "stockManager")
 @ViewScoped
 public class StockManager implements Serializable {
 
@@ -40,15 +43,15 @@ public class StockManager implements Serializable {
 	private List<Stock> stockList;
 
 	private Stock selectedStock;
-	
-    /**
-     * 
-     */
-    @PostConstruct
-    public void init() {
-    	stockList = em.createQuery("select l from Stock l", Stock.class).getResultList();
-    }
-    
+
+	/**
+	 * 
+	 */
+	@PostConstruct
+	public void init() {
+		stockList = em.createQuery("select l from Stock l", Stock.class).getResultList();
+	}
+
 	/**
 	 * @return name
 	 */
@@ -131,29 +134,39 @@ public class StockManager implements Serializable {
 	 */
 	public List<Stock> getStockList() {
 		return stockList;
-	} 
-	
+	}
+
 	/**
 	 * 
 	 * @return 選択された在庫
 	 */
-    public Stock getSelectedStock() {
-        return selectedStock;
-    }
- 
-    /**
-     * 
-     * @param selectedStock 選択された在庫
-     */
-    public void setSelectedStock(Stock selectedStock) {
-        this.selectedStock = selectedStock;
-    }
+	public Stock getSelectedStock() {
+		return selectedStock;
+	}
+
+	/**
+	 * 
+	 * @param selectedStock
+	 *            選択された在庫
+	 */
+	public void setSelectedStock(Stock selectedStock) {
+		this.selectedStock = selectedStock;
+	}
 
 	/**
 	 * 
 	 * @return null
 	 */
 	public String add() {
+		return null;
+	}
+
+	public String getAccountName() {
+		Object tmp = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("SellerAccount");
+
+		if (tmp instanceof SellerAccount) {
+			return ((SellerAccount)tmp).getMail();
+		}
 		return null;
 	}
 }

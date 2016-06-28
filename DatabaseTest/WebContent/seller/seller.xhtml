@@ -14,6 +14,7 @@
 </h:head>
 <h:body>
 	<f:view>
+		<f:event listener="#{headerBean.isLoggedIn}" type="preRenderView" />
 		<ui:include src="header.xhtml" />
 		<p:tabView>
 			<p:tab title="売り上げ">

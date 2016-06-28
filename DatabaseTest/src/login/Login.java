@@ -1,9 +1,12 @@
 package login;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,14 +16,19 @@ import entity.ExchangeHistory;
 import entity.Item;
 import entity.PreservedAvatar;
 import entity.SellerAccount;
+import entity.UserAccount;
 
 /**
  * @author Mu
  *
  */
+@SuppressWarnings("serial")
 @Named
-@RequestScoped
-public class Login {
+@SessionScoped
+public class Login implements Serializable {
+
+	@Inject
+	private HeaderBean headerBean;
 
 	String id;
 	String pass;
@@ -74,27 +82,46 @@ public class Login {
 	 */
 	public String CheckAccount() {
 		ItemManager im = new ItemManager(em);
-		for (Item item : im.getItemListContains(id)){
+		for (Item item : im.getItemListContains(id)) {
 			System.out.println(item.getName());
 		}
 
 		AccountManager am = new AccountManager(em);
-		
+
 		for (PreservedAvatar avatar : am.getPreservedAvatar(id)) {
 			System.out.println(avatar.getAccountId() + "|" + avatar.getDate() + "|" + avatar.getAvatar().getName() + "|"
 					+ avatar.getAvatar().getPoint());
 		}
 
-		if (am.checkUser(id, pass)) {
+		UserAccount user = am.checkUser(id, pass);
+		if (user != null) {
+			am.userLogin(user);
 			return "seller/seller?faces-redirect=true";
 		}
 
-		if (am.checkSeller(id, pass)) {
+		SellerAccount seller = am.checkSeller(id, pass);
+		if (seller != null) {
+			am.sellerLogin(seller);
 			return "seller/seller?faces-redirect=true";
 		}
 
 		System.out.println("NG");
 		return null;
 
+	}
+
+	/**
+	 * @return headerBean
+	 */
+	public HeaderBean getHeaderBean() {
+		return headerBean;
+	}
+
+	/**
+	 * @param headerBean
+	 *            セットする headerBean
+	 */
+	public void setHeaderBean(HeaderBean headerBean) {
+		this.headerBean = headerBean;
 	}
 }

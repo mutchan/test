@@ -40,7 +40,7 @@ public class SellerAccount implements Serializable {
 
 	/**
 	 * 
-	 * @return パスワード
+	 * @return ID
 	 */
 	public String getId() {
 		return this.id;
@@ -49,7 +49,7 @@ public class SellerAccount implements Serializable {
 	/**
 	 * 
 	 * @param id
-	 *            パスワード
+	 *            ID
 	 */
 	public void setId(String id) {
 		this.id = id;
