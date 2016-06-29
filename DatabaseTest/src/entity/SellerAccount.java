@@ -10,24 +10,26 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "SELLER_ACCOUNT")
-@NamedQuery(name = SellerAccount.BY_ID, query = "select sa from SellerAccount sa where sa.id = :id")
+@NamedQueries({ @NamedQuery(name = SellerAccount.BY_ID, query = "select sa from SellerAccount sa where sa.id = :id"),
+		@NamedQuery(name = SellerAccount.BY_NUMBER, query = "select sa from SellerAccount sa where sa.number = :number") })
 public class SellerAccount implements Serializable {
 
-	public static final String BY_ID = "SellerAccount.byId";
-	
+	public static final String BY_ID = "SellerAccount.findById";
+	public static final String BY_NUMBER = "SellerAccount.findByNumber";
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2986792687054254909L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int number;
-    @Column(length = 30)
+	@Column(length = 30)
 	private String id;
-    @Column(length = 20)
+	@Column(length = 20)
 	private String password;
-    @Column(length = 30)
+	@Column(length = 30)
 	private String mail;
 
 	/**
@@ -80,7 +82,8 @@ public class SellerAccount implements Serializable {
 	}
 
 	/**
-	 * @param mail セットする mail
+	 * @param mail
+	 *            セットする mail
 	 */
 	public void setMail(String mail) {
 		this.mail = mail;

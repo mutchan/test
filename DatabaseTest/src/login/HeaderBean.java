@@ -2,6 +2,7 @@ package login;
 
 import java.io.Serializable;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.context.FacesContext;
@@ -9,8 +10,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 
 import entity.SellerAccount;
+import manager.AccountManager;
 
 /**
  * @author M
@@ -24,7 +27,10 @@ public class HeaderBean implements Serializable {
 	@PersistenceContext(unitName = "DatabaseTest")
 	private EntityManager em;
 
-	private AccountManager am = new AccountManager(em);
+	@Resource
+	UserTransaction utx;
+
+	private AccountManager am = new AccountManager(em, utx);
 	
 	/**
 	 * 

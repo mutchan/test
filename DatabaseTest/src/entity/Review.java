@@ -17,8 +17,9 @@ public class Review implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@Column(name = "ACCOUNT_ID", length = 30)
-	private String accountId;
+	@ManyToOne(targetEntity = UserAccount.class)
+	@JoinColumn(name = "ACCOUNT_ID", referencedColumnName = "GLOCOMM_ID")
+	private UserAccount account;
 	
 	@Temporal(TemporalType.DATE)
 	private Date date;
@@ -63,20 +64,20 @@ public class Review implements Serializable {
 	}
 
 	/**
-	 * レビューしたアカウントのIDの取得
+	 * レビューしたアカウントの取得
 	 * 
-	 * @return レビューしたアカウントのID
+	 * @return レビューしたアカウント
 	 */
-	public String getAccountId() {
-		return this.accountId;
+	public UserAccount getAccount() {
+		return this.account;
 	}
 
 	/**
-	 * レビューしたアカウントのIDの設定
-	 * @param accountId レビューしたアカウントのID
+	 * レビューしたアカウントの設定
+	 * @param accountId レビューしたアカウント
 	 */
-	public void setAccountId(String accountId) {
-		this.accountId = accountId;
+	public void setAccountId(UserAccount account) {
+		this.account = account;
 	}
 
 	public Date getDate() {

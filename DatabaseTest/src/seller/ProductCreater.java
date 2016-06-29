@@ -31,7 +31,7 @@ public class ProductCreater implements Serializable {
 	 */
 	private static final long serialVersionUID = 1978891714396809992L;
 
-	private OpenInfo openInfo;
+	private PublicStat openInfo;
 	private String name;
 	private String desc;
 	private Category category;
@@ -50,14 +50,14 @@ public class ProductCreater implements Serializable {
 	/**
 	 * @return openInfo
 	 */
-	public OpenInfo getOpenInfo() {
+	public PublicStat getOpenInfo() {
 		return openInfo;
 	}
 
 	/**
 	 * @param openInfo セットする openInfo
 	 */
-	public void setOpenInfo(OpenInfo openInfo) {
+	public void setOpenInfo(PublicStat openInfo) {
 		this.openInfo = openInfo;
 	}
 
@@ -66,8 +66,8 @@ public class ProductCreater implements Serializable {
 	 * 
 	 * @return 公開のリスト
 	 */
-	public OpenInfo[] getOpenInfoList() {
-		return OpenInfo.values();
+	public PublicStat[] getOpenInfoList() {
+		return PublicStat.values();
 	}
 
 	/**

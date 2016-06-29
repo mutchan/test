@@ -28,6 +28,8 @@ import org.primefaces.model.SortOrder;
 
 import com.sun.xml.ws.util.StringUtils;
 
+import entity.Item;
+
 /**
  * 在庫管理を行うクラス
  * 
@@ -79,7 +81,7 @@ public class StockOperation {
 	 * @throws IOException
 	 *             ファイルのアップロードに失敗したときに発生
 	 */
-	public void regist(String description, int count, Part file, String name, Category category, OpenInfo openInfo)
+	public void regist(String description, int count, Part file, String name, Category category, PublicStat publicStat)
 			throws IOException {
 		// 画像ディレクトリの取得
 		ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
@@ -100,13 +102,13 @@ public class StockOperation {
 
 		try {
 			utx.begin();
-			Stock stock = new Stock();
-			stock.setCount(count);
-			stock.setDescription(description);
-			stock.setImgPath(imageFile.toPath().toString());
+			Item stock = new Item();
+			stock.setStock(count);
+			stock.setDesc(description);
+			stock.setImagePath(imageFile.toPath().toString());
 			stock.setLastEdit(getCurrentDate());
 			stock.setName(name);
-			stock.setOpenInfo(openInfo);
+			stock.setPublicStat(publicStat);
 			stock.setCategory(category);
 
 			em.persist(stock);
@@ -142,18 +144,18 @@ public class StockOperation {
 	 * 
 	 * @return 在庫リスト
 	 */
-	public LazyDataModel<Stock> getStockList() {
-		List<Stock> stockList = em.createQuery("select l from Stock l", Stock.class).getResultList();
+	public LazyDataModel<Item> getItemList() {
+		List<Item> stockList = em.createQuery("select l from Item l", Item.class).getResultList();
 
 		@SuppressWarnings("serial")
-		class LazyStockDataModel extends LazyDataModel<Stock> {
-			private List<Stock> stockList;
+		class LazyItemDataModel extends LazyDataModel<Item> {
+			private List<Item> stockList;
 
-			public LazyStockDataModel(List<Stock> stockList) {
+			public LazyItemDataModel(List<Item> stockList) {
 				this.stockList = stockList;
 			}
 
-			public java.util.List<Stock> load(int first, int pageSize, String sortField,
+			public java.util.List<Item> load(int first, int pageSize, String sortField,
 					org.primefaces.model.SortOrder sortOrder, java.util.Map<String, Object> filters) {
 				// sort
 				if (sortField != null) {
@@ -178,15 +180,15 @@ public class StockOperation {
 			}
 
 			@Override
-			public Object getRowKey(Stock stock) {
+			public Object getRowKey(Item stock) {
 				return stock.getId();
 			}
 
 			@Override
-			public Stock getRowData(String stockId) {
+			public Item getRowData(String stockId) {
 				Integer id = Integer.valueOf(stockId);
 
-				for (Stock stock : stockList) {
+				for (Item stock : stockList) {
 					if (id.equals(stock.getId())) {
 						return stock;
 					}
@@ -195,7 +197,7 @@ public class StockOperation {
 				return null;
 			}
 
-			class LazySorter implements Comparator<Stock> {
+			class LazySorter implements Comparator<Item> {
 
 				private String sortField;
 
@@ -206,9 +208,9 @@ public class StockOperation {
 					this.sortOrder = sortOrder;
 				}
 
-				public int compare(Stock stock1, Stock stock2) {
+				public int compare(Item stock1, Item stock2) {
 					try {
-						Method method = Stock.class.getMethod("get" + StringUtils.capitalize(this.sortField));
+						Method method = Item.class.getMethod("get" + StringUtils.capitalize(this.sortField));
 
 						try {
 							Object value1 = method.invoke(stock1);
@@ -241,6 +243,6 @@ public class StockOperation {
 			}
 		}
 
-		return new LazyStockDataModel(stockList);
+		return new LazyItemDataModel(stockList);
 	}
 }

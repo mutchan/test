@@ -1,22 +1,29 @@
 package login;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
-import entity.ExchangeHistory;
 import entity.Item;
 import entity.PreservedAvatar;
 import entity.SellerAccount;
 import entity.UserAccount;
+import manager.AccountManager;
+import manager.ItemManager;
+import seller.Category;
+import seller.PublicStat;
 
 /**
  * @author Mu
@@ -24,7 +31,7 @@ import entity.UserAccount;
  */
 @SuppressWarnings("serial")
 @Named
-@SessionScoped
+@RequestScoped
 public class Login implements Serializable {
 
 	@Inject
@@ -81,29 +88,33 @@ public class Login implements Serializable {
 	 * @return 成功時はトップページへのリンク
 	 */
 	public String CheckAccount() {
-		ItemManager im = new ItemManager(em);
+		ItemManager im = new ItemManager(em, utx);
 		for (Item item : im.getItemListContains(id)) {
-			System.out.println(item.getName());
+			item.getReviewList().stream().forEach(s -> System.out.println(s.getComment()));
 		}
 
-		AccountManager am = new AccountManager(em);
+		im.registItem("aaa", "", 100, "", Category.C, PublicStat.PUBLIC, new Date(), new Date());
+		im.updateItem(4, "bbb", "ccc", 1200, "ddd.png", Category.B, PublicStat.PRIVATE, new Date());
+		
+		AccountManager am = new AccountManager(em, utx);
 
 		for (PreservedAvatar avatar : am.getPreservedAvatar(id)) {
 			System.out.println(avatar.getAccountId() + "|" + avatar.getDate() + "|" + avatar.getAvatar().getName() + "|"
 					+ avatar.getAvatar().getPoint());
 		}
 
-		UserAccount user = am.checkUser(id, pass);
+		UserAccount user = am.userLogin(id, pass);
 		if (user != null) {
-			am.userLogin(user);
 			return "seller/seller?faces-redirect=true";
 		}
 
-		SellerAccount seller = am.checkSeller(id, pass);
+		SellerAccount seller = am.sellerLogin(id, pass);
 		if (seller != null) {
-			am.sellerLogin(seller);
 			return "seller/seller?faces-redirect=true";
 		}
+		
+		//am.updatUserName("健次郎");
+		am.updateSellerPassword("pss");
 
 		System.out.println("NG");
 		return null;

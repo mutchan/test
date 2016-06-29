@@ -21,8 +21,9 @@ public class Bbs implements Serializable {
 	private String accountId;
 	@Temporal(TemporalType.DATE)
 	private Date date;
-	@Column(name = "IMAGE_ID")
-	private int imageId;
+	@ManyToOne(targetEntity = Avatar.class)
+	@JoinColumn(name = "AVATAR_ID", referencedColumnName = "id")
+	private Avatar avatar;
 	private String comment;
 	private int parent;
 	private static final long serialVersionUID = 1L;
@@ -51,12 +52,12 @@ public class Bbs implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}   
-	public int getImageId() {
-		return this.imageId;
+	public Avatar getAvatar() {
+		return this.avatar;
 	}
 
-	public void setImageId(int imageId) {
-		this.imageId = imageId;
+	public void setAvatar(Avatar avatar) {
+		this.avatar = avatar;
 	}   
 	public String getComment() {
 		return this.comment;

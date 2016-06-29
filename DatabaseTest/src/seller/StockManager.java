@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.servlet.http.Part;
 import javax.transaction.UserTransaction;
 
+import entity.Item;
 import entity.SellerAccount;
 
 /**
@@ -40,16 +41,16 @@ public class StockManager implements Serializable {
 	private String count;
 	private Part file;
 
-	private List<Stock> stockList;
+	private List<Item> stockList;
 
-	private Stock selectedStock;
+	private Item selectedStock;
 
 	/**
 	 * 
 	 */
 	@PostConstruct
 	public void init() {
-		stockList = em.createQuery("select l from Stock l", Stock.class).getResultList();
+		stockList = em.createQuery("select l from Item l", Item.class).getResultList();
 	}
 
 	/**
@@ -132,7 +133,7 @@ public class StockManager implements Serializable {
 	 * 
 	 * @return 在庫リスト
 	 */
-	public List<Stock> getStockList() {
+	public List<Item> getStockList() {
 		return stockList;
 	}
 
@@ -140,7 +141,7 @@ public class StockManager implements Serializable {
 	 * 
 	 * @return 選択された在庫
 	 */
-	public Stock getSelectedStock() {
+	public Item getSelectedStock() {
 		return selectedStock;
 	}
 
@@ -149,7 +150,7 @@ public class StockManager implements Serializable {
 	 * @param selectedStock
 	 *            選択された在庫
 	 */
-	public void setSelectedStock(Stock selectedStock) {
+	public void setSelectedStock(Item selectedStock) {
 		this.selectedStock = selectedStock;
 	}
 

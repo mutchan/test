@@ -12,7 +12,6 @@ import javax.persistence.*;
 
 public class Avatar implements Serializable {
 
-
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;

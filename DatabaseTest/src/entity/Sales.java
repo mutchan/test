@@ -10,65 +10,76 @@ import javax.persistence.*;
  *
  */
 @Entity
-
+@NamedQueries({ @NamedQuery(name = Sales.FIND_ALL, query = "Select s from Sales s"),
+		@NamedQuery(name = Sales.BY_DATE, query = "Select s from Sales s") })
 public class Sales implements Serializable {
 
-	   
+	public static final String FIND_ALL = "Sales.findAll";
+	public static final String BY_DATE = "Sales.findByDate";
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date date;
 
-	@Column(name = "ITEM_ID")
-	private int itemId;
+	@ManyToOne(targetEntity = Item.class)
+	@JoinColumn(name = "ITEM_ID", referencedColumnName = "ID")
+	private Item item;
 	private int count;
 
-	@Column(name = "ACCOUNT_ID", length = 30)
-	private String accountId;
+	@ManyToOne(targetEntity = UserAccount.class)
+	@JoinColumn(name = "ACCOUNT_ID", referencedColumnName = "GLOCOMM_ID")
+	private UserAccount account;
 	private int price;
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public Sales() {
 		super();
-	}   
+	}
+
 	public int getId() {
 		return this.id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}   
+	}
+
 	public Date getDate() {
 		return this.date;
 	}
 
 	public void setDate(Date date) {
 		this.date = date;
-	}   
-	public int getItemId() {
-		return this.itemId;
 	}
 
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
-	}   
+	public Item getItem() {
+		return this.item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
 	public int getCount() {
 		return this.count;
 	}
 
 	public void setCount(int count) {
 		this.count = count;
-	}   
-	public String getAccountId() {
-		return this.accountId;
 	}
 
-	public void setAccountId(String accountId) {
-		this.accountId = accountId;
-	}   
+	public UserAccount getAccount() {
+		return this.account;
+	}
+
+	public void setAccount(UserAccount accountId) {
+		this.account = account;
+	}
+
 	public int getPrice() {
 		return this.price;
 	}
@@ -76,5 +87,5 @@ public class Sales implements Serializable {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-   
+
 }

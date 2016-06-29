@@ -10,6 +10,7 @@ import javax.persistence.*;
  *
  */
 @Entity
+@Table(name="PRESERVED_AVATAR")
 @NamedQuery(name = PreservedAvatar.BY_GLOCOMM_ID, query = "Select p from PreservedAvatar p where p.accountId = ?1")
 public class PreservedAvatar implements Serializable {
 

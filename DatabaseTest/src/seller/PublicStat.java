@@ -5,7 +5,7 @@ package seller;
  * @author Mu
  *
  */
-public enum OpenInfo {
+public enum PublicStat {
 	/**
 	 * 商品を公開
 	 */
@@ -16,7 +16,7 @@ public enum OpenInfo {
 	PRIVATE("非公開");
 	
 	String label;
-	OpenInfo(String label){
+	PublicStat(String label){
 		this.label = label;
 	}
 	

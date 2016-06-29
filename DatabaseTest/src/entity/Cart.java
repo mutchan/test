@@ -9,47 +9,55 @@ import javax.persistence.*;
  *
  */
 @Entity
-
+@NamedQueries({ @NamedQuery(name = Cart.BY_ID, query = "SELECT c FROM Cart c WHERE c.id = :id"),
+		@NamedQuery(name = Cart.BY_GLOCOMM_ID, query = "SELECT c FROM Cart c WHERE c.accountId = :glocommId") })
 public class Cart implements Serializable {
 
-	   
+	public static final String BY_ID = "Cart.findById";
+	public static final String BY_GLOCOMM_ID = "Cart.findByGlocommId";
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
+
 	@Column(name = "ACCOUNT_ID", length = 30)
 	private String accountId;
 
-	@Column(name = "ITEM_ID")
-	private int itemId;
+	@ManyToOne(targetEntity = Avatar.class)
+	@JoinColumn(name = "ITEM_ID", referencedColumnName = "id")
+	private Item item;
 	private int count;
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public Cart() {
 		super();
-	}   
+	}
+
 	public int getId() {
 		return this.id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}   
+	}
+
 	public String getAccountId() {
 		return this.accountId;
 	}
 
 	public void setAccountId(String accountId) {
 		this.accountId = accountId;
-	}   
-	public int getItemId() {
-		return this.itemId;
 	}
 
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
-	}   
+	public Item getItem() {
+		return this.item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
 	public int getCount() {
 		return this.count;
 	}
@@ -57,5 +65,5 @@ public class Cart implements Serializable {
 	public void setCount(int count) {
 		this.count = count;
 	}
-   
+
 }
