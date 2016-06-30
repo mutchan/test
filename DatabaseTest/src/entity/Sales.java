@@ -11,11 +11,13 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries({ @NamedQuery(name = Sales.FIND_ALL, query = "Select s from Sales s"),
-		@NamedQuery(name = Sales.BY_DATE, query = "Select s from Sales s") })
+		@NamedQuery(name = Sales.BY_ID, query = "Select s from Sales s where s.id = :id"),
+		@NamedQuery(name = Sales.BY_ACCOUNT, query = "Select s from Sales s where s.account = :account")  })
 public class Sales implements Serializable {
 
 	public static final String FIND_ALL = "Sales.findAll";
-	public static final String BY_DATE = "Sales.findByDate";
+	public static final String BY_ID = "Sales.findById";
+	public static final String BY_ACCOUNT = "Sales.findByAccount";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

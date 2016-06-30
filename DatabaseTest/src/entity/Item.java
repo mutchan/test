@@ -138,6 +138,10 @@ public class Item implements Serializable {
 
 	}
 	
+	public int getPrice(){
+		return 100;
+	}
+	
 	public double getReview(){
 		int total = reviewList.stream().collect(Collectors.summingInt(review -> review.getStar()));
 		return total / reviewList.size();

@@ -2,6 +2,7 @@ package login;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
@@ -20,6 +21,7 @@ import entity.Item;
 import entity.PreservedAvatar;
 import entity.SellerAccount;
 import entity.UserAccount;
+import jdk.nashorn.internal.objects.annotations.Constructor;
 import manager.AccountManager;
 import manager.ItemManager;
 import seller.Category;
@@ -45,6 +47,16 @@ public class Login implements Serializable {
 
 	@Resource
 	UserTransaction utx;
+
+	ItemManager im;
+	List<Item> itemList;
+
+	@Constructor
+	public void init() {
+		im = new ItemManager(em, utx);
+		itemList = im.getAllItemList();
+		System.out.println(itemList);
+	}
 
 	/**
 	 * 
@@ -95,8 +107,11 @@ public class Login implements Serializable {
 
 		im.registItem("aaa", "", 100, "", Category.C, PublicStat.PUBLIC, new Date(), new Date());
 		im.updateItem(4, "bbb", "ccc", 1200, "ddd.png", Category.B, PublicStat.PRIVATE, new Date());
-		
+
 		AccountManager am = new AccountManager(em, utx);
+
+		// am.updatUserName("健次郎");
+		am.updateSellerPassword("pass");
 
 		for (PreservedAvatar avatar : am.getPreservedAvatar(id)) {
 			System.out.println(avatar.getAccountId() + "|" + avatar.getDate() + "|" + avatar.getAvatar().getName() + "|"
@@ -112,9 +127,6 @@ public class Login implements Serializable {
 		if (seller != null) {
 			return "seller/seller?faces-redirect=true";
 		}
-		
-		//am.updatUserName("健次郎");
-		am.updateSellerPassword("pss");
 
 		System.out.println("NG");
 		return null;
@@ -134,5 +146,9 @@ public class Login implements Serializable {
 	 */
 	public void setHeaderBean(HeaderBean headerBean) {
 		this.headerBean = headerBean;
+	}
+
+	public List<Item> getItemList() {
+		return itemList;
 	}
 }

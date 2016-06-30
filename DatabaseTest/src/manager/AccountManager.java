@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
@@ -183,13 +184,13 @@ public class AccountManager {
 	 */
 	public void updateSellerPassword(String pass) {
 		try {
-			utx.begin();
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
 			SellerAccount account = em.createNamedQuery(SellerAccount.BY_NUMBER, SellerAccount.class)
 					.setParameter("number", getCurrentSellerAccount().getNumber()).getSingleResult();
 			account.setPassword(pass);
-			utx.commit();
-		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
-				| HeuristicMixedException | HeuristicRollbackException e) {
+			tx.commit();
+		} catch (SecurityException | IllegalStateException e) {
 			e.printStackTrace();
 
 			try {

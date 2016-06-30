@@ -10,10 +10,12 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "SELLER_ACCOUNT")
-@NamedQueries({ @NamedQuery(name = SellerAccount.BY_ID, query = "select sa from SellerAccount sa where sa.id = :id"),
+@NamedQueries({ @NamedQuery(name = SellerAccount.FIND_ALL, query = "select sa from SellerAccount sa"),
+		@NamedQuery(name = SellerAccount.BY_ID, query = "select sa from SellerAccount sa where sa.id = :id"),
 		@NamedQuery(name = SellerAccount.BY_NUMBER, query = "select sa from SellerAccount sa where sa.number = :number") })
 public class SellerAccount implements Serializable {
 
+	public static final String FIND_ALL = "SellerAccount.findAll";
 	public static final String BY_ID = "SellerAccount.findById";
 	public static final String BY_NUMBER = "SellerAccount.findByNumber";
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet" type="text/css" href="header.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>numazon</title>
+</h:head>
+<h:body>
+	<f:view>
+		<ui:include src="header.xhtml" />
+		<br />
+		<h:form id="form">
+			<!-- valueにモデルを指定し、selectionで選択されたリストを指定します -->
+			<p:dataTable id="dtSelectable" var="avatar"
+				value="#{pointBean.avatarList}" sortMode="multiple" paginator="true"
+				rows="5" rowsPerPageTemplate="5,10,15" paginatorPosition="bottom"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				pageLinks="5" selection="#{pointBean.selectedAvatars}">
+				<p:ajax event="rowSelect" update=":form:surplus" />
+				<p:ajax event="rowUnselect" update=":form:surplus" />
+				<p:ajax event="rowSelectCheckbox" update=":form:surplus" />
+				<p:ajax event="rowUnselectCheckbox" update=":form:surplus" />
+
+				<!-- チェックボックスを定義するのではなく、モード指定するのみ-->
+				<p:column selectionMode="multiple" />
+
+				<!-- IDのカラム -->
+				<p:column id="name" headerText="品名">
+					<p:outputLabel value="#{avatar.name}" />
+				</p:column>
+
+				<!-- タイトルのカラム -->
+				<p:column id="point" headerText="ポイント">
+					<p:outputLabel value="#{avatar.id}" />
+				</p:column>
+			</p:dataTable>
+			<h:outputText id="surplus" value="#{pointBean.lastPoint}" />
+			<h:commandButton value="交換する" action="#{pointBean.exchange}" />
+		</h:form>
+	</f:view>
+</h:body>
+</html>

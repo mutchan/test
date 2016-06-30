@@ -113,6 +113,8 @@ public class StockOperation {
 
 			em.persist(stock);
 			utx.commit();
+			System.out.println(stock.getId());
+			throw new IllegalStateException("テスト");
 		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
 				| HeuristicMixedException | HeuristicRollbackException e) {
 			e.printStackTrace();

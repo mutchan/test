@@ -17,19 +17,7 @@
 		<ui:include src="header.xhtml" />
 		<br />
 		<h:form>
-			<p:dataGrid var="item" value="#{topPage.itemList}" columns="3"
-				layout="grid" rows="32" paginator="true" id="itemList" paginatorPosition="bottom"
-				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="6,12,16">
-				<p:panel header="#{item.name}" style="text-align:center">
-					<h:panelGrid columns="1" style="width:100%">
-						<p:graphicImage name="#{item.imagePath}" />
-
-						<h:outputText value="#{item.desc}" />
-					</h:panelGrid>
-				</p:panel>
-
-			</p:dataGrid>
+			<h:commandButton value="データベースの設定" action="#{testData.createData}"/>
 		</h:form>
 	</f:view>
 </h:body>

@@ -10,7 +10,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "GLOCOMM_ACCOUNT")
+@NamedQueries({ @NamedQuery(name = GlocommAccount.FIND_ALL, query = "select a from GlocommAccount a") })
 public class GlocommAccount implements Serializable {
+	public static final String FIND_ALL = "GlocommAccount.findAll";
 
 	@Id
 	private String id;
@@ -40,4 +42,11 @@ public class GlocommAccount implements Serializable {
 		this.pass = pass;
 	}
 
+	public UserAccount getUserAccount() {
+		return this.userAccount;
+	}
+
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
+	}
 }
