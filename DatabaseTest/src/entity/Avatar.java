@@ -9,8 +9,9 @@ import javax.persistence.*;
  *
  */
 @Entity
-
+@NamedQuery(name = Avatar.FIND_ALL, query = "Select c from Avatar c")
 public class Avatar implements Serializable {
+	public static final String FIND_ALL = "Avatar.findAll";
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)

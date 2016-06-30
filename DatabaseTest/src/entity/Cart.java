@@ -9,10 +9,12 @@ import javax.persistence.*;
  *
  */
 @Entity
-@NamedQueries({ @NamedQuery(name = Cart.BY_ID, query = "SELECT c FROM Cart c WHERE c.id = :id"),
+@NamedQueries({ @NamedQuery(name = Cart.FIND_ALL, query = "Select c from Cart c"),
+		@NamedQuery(name = Cart.BY_ID, query = "SELECT c FROM Cart c WHERE c.id = :id"),
 		@NamedQuery(name = Cart.BY_GLOCOMM_ID, query = "SELECT c FROM Cart c WHERE c.accountId = :glocommId") })
 public class Cart implements Serializable {
 
+	public static final String FIND_ALL = "Cart.findAll";
 	public static final String BY_ID = "Cart.findById";
 	public static final String BY_GLOCOMM_ID = "Cart.findByGlocommId";
 

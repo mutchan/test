@@ -10,9 +10,11 @@ import javax.persistence.*;
  *
  */
 @Entity
-
+@NamedQuery(name = Review.FIND_ALL, query = "Select r from Review r")
 public class Review implements Serializable {
 
+	public static final String FIND_ALL = "Review.findAll";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -76,7 +78,7 @@ public class Review implements Serializable {
 	 * レビューしたアカウントの設定
 	 * @param accountId レビューしたアカウント
 	 */
-	public void setAccountId(UserAccount account) {
+	public void setAccount(UserAccount account) {
 		this.account = account;
 	}
 

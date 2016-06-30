@@ -10,12 +10,14 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Table(name="PRESERVED_AVATAR")
-@NamedQuery(name = PreservedAvatar.BY_GLOCOMM_ID, query = "Select p from PreservedAvatar p where p.accountId = ?1")
+@Table(name = "PRESERVED_AVATAR")
+@NamedQueries({ @NamedQuery(name = PreservedAvatar.FIND_ALL, query = "Select r from PreservedAvatar r"),
+		@NamedQuery(name = PreservedAvatar.BY_GLOCOMM_ID, query = "Select p from PreservedAvatar p where p.accountId = ?1") })
 public class PreservedAvatar implements Serializable {
 
+	public static final String FIND_ALL = "PreservedAvatar.findAll";
 	public static final String BY_GLOCOMM_ID = "PreservedAvatar.byGlocommId";
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -53,7 +55,7 @@ public class PreservedAvatar implements Serializable {
 		return this.avatar;
 	}
 
-	public void setAvatarId(Avatar avatar) {
+	public void setAvatar(Avatar avatar) {
 		this.avatar = avatar;
 	}
 
