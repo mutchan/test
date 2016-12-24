@@ -31,6 +31,10 @@ public class TestUtil {
 	 */
 	public static void setenv(String propertyName, boolean verbose) throws IOException {
 
+		// 標準出力を一時的に無効化
+		PrintStream stdout = System.out;
+		System.setOut(new PrintStream("nul"));
+		
 		// モックに設定
 		spy(Env.class);
 
@@ -40,24 +44,23 @@ public class TestUtil {
 		// プロパティの設定
 		Properties properties = new Properties();
 		properties.load(fs);
-
-		PrintStream stdout = System.out;
+		
 		// プロパティを環境変数(のモック)に登録
 		for (String name : properties.stringPropertyNames()) {
 			String value = properties.getProperty(name);
 			try {
-				System.setOut(new PrintStream("nul"));
 				when(Env.class, "getEnv", name).thenReturn(value);
 			} catch (Exception e) {
-				e.printStackTrace();
-			}finally {
-				System.setOut(stdout);
+				e.printStackTrace(stdout);
 			}
 
 			// 中身を見たいときは出力
 			if (verbose) {
-				System.out.println("[TestUtil#setenv] " + name + " = " + value);
+				stdout.println("[TestUtil#setenv] " + name + " = " + value);
 			}
 		}
+		
+		// 標準出力を元に戻す
+		System.setOut(stdout);
 	}
 }
